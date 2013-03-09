@@ -1,3 +1,8 @@
+
+# 3/5/2013 HW 2 part 2
+#created the variable @all_ratings
+#created session
+
 class MoviesController < ApplicationController
 
   def show
@@ -8,16 +13,21 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    
+    @all_ratings = Movie.all_ratings
+    @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
+    session[:param] = params
   end
 
   def new
     # default: render 'new' template
+
   end
 
   def create
     @movie = Movie.create!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    redirect_to movies_path(session[:param])
   end
 
   def edit

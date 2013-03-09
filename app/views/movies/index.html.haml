@@ -1,17 +1,27 @@
 -#  This file is app/views/movies/index.html.haml
--# Feb. 28, 2013
+-# Feb. 28, hw2 1.b
 -# created Movie Title and Relese Date link to sort
+-# used sort_by to sort movies
+-# hw2 2 copied and pasted form_tag from pastebin.
+-#edited form_tag to have corresponding id
 %h1 All Movies
+
+= form_tag movies_path, :id => "ratings_form", :method => :get do 
+  Include:
+  - @all_ratings.each do |rating|
+    = rating
+    = check_box_tag "ratings[#{rating}]", @selected_ratings.include?(rating), :id => "ratings_#{rating}"
+  =submit_tag 'Refresh', :id => "ratings_submit"
 
 %table#movies
   %thead
     %tr
-      %th= link_to 'Movie Title', new_movie_path
+      %th= link_to 'Movie Title', movies_path(:sort=> 'title'), :id => 'title_header', :class => helper_class('title')
       %th Rating
-      %th= link_to 'Release Date', new_movie_path
+      %th= link_to 'Release Date', movies_path(:sort => 'release'),:id => 'release_date_header', :class => helper_class('release')
       %th More Info
   %tbody
-    - @movies.each do |movie|
+    - @movies.sort_by{|movie| sort(movie)}.each do |movie|
       %tr
         %td= movie.title 
         %td= movie.rating
