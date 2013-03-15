@@ -1,7 +1,6 @@
 -#  This file is app/views/movies/index.html.haml
--# Feb. 28, hw2 1.b
+-# Zaida Mejia Feb. 28, hw2 1.b
 -# created Movie Title and Relese Date link to sort
--# used sort_by to sort movies
 -# hw2 2 copied and pasted form_tag from pastebin.
 -#edited form_tag to have corresponding id
 %h1 All Movies
@@ -10,17 +9,21 @@
   Include:
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings[#{rating}]", @selected_ratings.include?(rating), :id => "ratings_#{rating}"
+    = check_box_tag "ratings[#{rating}]", 1, (true if @ratings[rating]), :id => "ratings_#{rating}"
   =submit_tag 'Refresh', :id => "ratings_submit"
 
+/*Feb 28 hw2 1b created links and 'hilite' when Movie Title or Reease Date is clicked.*/    
 %table#movies
   %thead
-    %tr
-      %th= link_to 'Movie Title', movies_path(:sort=> 'title'), :id => 'title_header', :class => helper_class('title')
+    %tr 
+      %th{:class =>('hilite'if @sort == 'title')}= link_to 'Movie Title', movies_path(:sort=> 'title',:ratings=>@ratings), :id => 'title_header'
       %th Rating
-      %th= link_to 'Release Date', movies_path(:sort => 'release'),:id => 'release_date_header', :class => helper_class('release')
+      %th{:class =>('hilite'if @sort == 'release')}= link_to 'Release Date', movies_path(:sort => 'release',:ratings=>@ratings),:id => 'release_date_header'
       %th More Info
+      /*-------------------------------------------------------------------------------*/
+
   %tbody
+    /* call sort method
     - @movies.sort_by{|movie| sort(movie)}.each do |movie|
       %tr
         %td= movie.title 

@@ -1,3 +1,6 @@
+/*Feb 28 added hilite in table*/
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -53,11 +56,13 @@ table#movies th, table#movies td {
   margin: 1em 0;
   padding: 4px;
 }
-
+/* css for hilite*/
 table#movies th.hilite {
   background-color: yellow;
   
 }
+/*-------------------------*/
+
 
 form label {
   display: block;
